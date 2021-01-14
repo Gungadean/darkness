@@ -102,7 +102,8 @@ public class Darkness {
 				if (angle > 0.25f && angle < 0.75f) {
 					final float oldWeight = Math.max(0, (Math.abs(angle - 0.5f) - 0.2f)) * 20;
 					final float moon = Config.ignoreMoonPhase.get() ? 0 : world.getMoonFactor();
-					return MathHelper.lerp(oldWeight * oldWeight * oldWeight, moon * moon, 1f);
+					final float moonInterpolated = (float) MathHelper.lerp(moon, Config.minimumMoonLevel.get(), Config.maximumMoonLevel.get());
+					return MathHelper.lerp(oldWeight * oldWeight * oldWeight, moonInterpolated, 1f) ;
 				} else {
 					return 1;
 				}
@@ -269,6 +270,8 @@ public class Darkness {
 		static ForgeConfigSpec.BooleanValue darkSkyless;
 		static ForgeConfigSpec.BooleanValue blockLightOnly;
 		static ForgeConfigSpec.BooleanValue ignoreMoonPhase;
+		static ForgeConfigSpec.DoubleValue minimumMoonLevel;
+		static ForgeConfigSpec.DoubleValue maximumMoonLevel;
 		static ForgeConfigSpec.BooleanValue darkOverworld;
 		static ForgeConfigSpec.BooleanValue darkDefault;
 		static ForgeConfigSpec.BooleanValue darkNether;
@@ -278,6 +281,8 @@ public class Darkness {
 			builder.push("general");
 			blockLightOnly = builder.define("only_affect_block_light", false);
 			ignoreMoonPhase = builder.define("ignore_moon_phase", false);
+			minimumMoonLevel = builder.defineInRange("minimum_moon_brightness", 0, 0, 1d);
+			maximumMoonLevel = builder.defineInRange("maximum_moon_brightness", 1d, 0, 1d);
 			darkOverworld = builder.define("dark_overworld", true);
 			darkDefault = builder.define("dark_default", true);
 			darkNether = builder.define("dark_nether", true);
