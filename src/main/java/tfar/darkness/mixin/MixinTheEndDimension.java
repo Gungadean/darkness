@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DimensionRenderInfo.End.class)
 public class MixinTheEndDimension {
-	private static double MIN = 0.029999999329447746D;
+	private static double MIN = 0.03D;
 
 	@Inject(method = "func_230494_a_", at = @At(value = "RETURN"), cancellable = true)
 	private void onAdjustSkyColor(CallbackInfoReturnable<Vector3d> ci) {
