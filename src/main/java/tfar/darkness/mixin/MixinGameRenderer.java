@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
-import tfar.darkness.Darkness;
+import tfar.darkness.DarknessClientUtils;
 import tfar.darkness.LightmapAccess;
 
 @Mixin(GameRenderer.class)
@@ -46,7 +46,7 @@ public class MixinGameRenderer {
 
 		if (lightmap.darkness_isDirty()) {
 			mc.getProfiler().startSection("lightTex");
-			Darkness.updateLuminance(tickDelta, mc, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
+			DarknessClientUtils.updateLuminance(tickDelta, mc, (GameRenderer) (Object) this, lightmap.darkness_prevFlicker());
 			mc.getProfiler().endSection();
 		}
 	}

@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import tfar.darkness.Darkness;
+import tfar.darkness.DarknessClientUtils;
 import tfar.darkness.TextureAccess;
 
 @Mixin(DynamicTexture.class)
@@ -36,11 +36,11 @@ public class MixinNativeImageBackedTexture implements TextureAccess {
 
 	@Inject(method = "updateDynamicTexture", at = @At(value = "HEAD"))
 	private void onRenderWorld(CallbackInfo ci) {
-		if (enableHook && Darkness.enabled) {
+		if (enableHook && DarknessClientUtils.enabled) {
 			final NativeImage img = dynamicTextureData;
 			for (int b = 0; b < 16; b++) {
 				for (int s = 0; s < 16; s++) {
-					final int color = Darkness.darken(img.getPixelRGBA(b, s), b, s);
+					final int color = DarknessClientUtils.darken(img.getPixelRGBA(b, s), b, s);
 					img.setPixelRGBA(b, s, color);
 				}
 			}
